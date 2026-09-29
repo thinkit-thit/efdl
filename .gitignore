@@ -1,0 +1,27 @@
+# --- Secrets : jamais dans Git ---
+backend/src/main/resources/application-local.yml
+backend/src/main/resources/application-prod.yml
+*.env
+.env*
+!.env.example
+
+# --- Backend (Maven) ---
+backend/target/
+*.class
+*.log
+
+# --- Frontend (Node / Vite) ---
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+
+# --- IDE / OS ---
+.idea/
+*.iml
+.vscode/
+.DS_Store
+Thumbs.db
+# Paramètres SMTP (mot de passe d'application Gmail) : jamais versionnés
+backend/config/mail.properties
+# Fichiers déposés (photos, documents) en local
+backend/data/

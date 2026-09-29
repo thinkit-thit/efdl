@@ -1,0 +1,24 @@
+[Unit]
+Description=eFDL (backend Spring Boot)
+After=network-online.target docker.service
+Wants=network-online.target
+Requires=docker.service
+
+[Service]
+User=efdl
+Group=efdl
+WorkingDirectory=/opt/efdl-modern
+# Configuration de production (secrets hors Git) : voir efdl.env.example.
+EnvironmentFile=/opt/efdl-modern/efdl.env
+ExecStart=/usr/bin/java $JAVA_OPTS -jar /opt/efdl-modern/efdl-backend.jar
+Restart=always
+RestartSec=10
+SuccessExitStatus=143
+# Durcissement
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ReadWritePaths=/home/data /opt/efdl-modern
+
+[Install]
+WantedBy=multi-user.target

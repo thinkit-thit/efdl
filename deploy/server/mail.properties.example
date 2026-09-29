@@ -1,0 +1,14 @@
+# Copier en mail.properties (non versionné) et renseigner les valeurs.
+# Gmail : smtp.gmail.com, port 587, STARTTLS, mot de passe d'application (compte Google > Sécurité > Mots de passe des applications).
+spring.mail.host=smtp.gmail.com
+spring.mail.port=587
+spring.mail.username=compte@gmail.com
+spring.mail.password=mot-de-passe-application
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.starttls.enable=true
+spring.mail.properties.mail.smtp.connectiontimeout=10000
+spring.mail.properties.mail.smtp.timeout=10000
+spring.mail.properties.mail.smtp.writetimeout=10000
+efdl.mail.from=eFDL <compte@gmail.com>
+# Lien des e-mails de notification vers eFDL (sans / final), ex. https://www.e-fdl.mg
+efdl.mail.app-url=https://test.e-fdl.mg

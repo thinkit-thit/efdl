@@ -1,0 +1,14 @@
+# Copier ce fichier en application-local.yml (non versionné) puis lancer avec le profil "local".
+spring:
+  # Envoi des e-mails : voir backend/config/mail.properties(.example).
+  mongodb:
+    uri: mongodb://127.0.0.1:27017
+    database: testfdl2025
+
+efdl:
+  security:
+    # Générer le hash BCrypt du mot de passe maître (admin.pass) — ne jamais mettre le mot de passe en clair.
+    admin-master-password-hash: "$2a$10$remplacer.par.le.hash.bcrypt"
+  tenant:
+    # externalId d'un document de la collection "school" (utilisé en local, quand le Host ne correspond à aucune école).
+    default-school-id: ""

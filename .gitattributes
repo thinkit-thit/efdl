@@ -1,0 +1,3 @@
+# Scripts : fins de ligne imposees quel que soit core.autocrlf
+*.cmd text eol=crlf
+*.sh  text eol=lf

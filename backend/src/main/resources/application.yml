@@ -1,0 +1,65 @@
+# Configuration commune — aucune valeur secrète ici.
+# Les valeurs réelles viennent des variables d'environnement ou de application-local.yml (non versionné).
+server:
+  port: 8081
+  servlet:
+    session:
+      timeout: 120m          # 120 minutes d'inactivité
+      cookie:
+        http-only: true
+        same-site: lax
+  error:
+    include-message: never
+    include-stacktrace: never
+
+spring:
+  config:
+    # Paramètres SMTP (fichier non versionné, chemin relatif au dossier de lancement : backend) ; absent = pas d'e-mails.
+    # En production : -Defdl.mail.config=/chemin/vers/mail.properties (ou variable EFDL_MAIL_CONFIG).
+    import: optional:file:${efdl.mail.config:${EFDL_MAIL_CONFIG:./config/mail.properties}}
+  servlet:
+    multipart:
+      # Imports Excel (fiches de suivi des sous-projets)
+      max-file-size: 10MB
+      max-request-size: 10MB
+  application:
+    name: efdl-backend
+  mongodb:
+    uri: ${MONGODB_URI:mongodb://127.0.0.1:27017}
+    database: ${MONGODB_DATABASE:testfdl2025}
+  data:
+    mongodb:
+      auto-index-creation: false   # ne jamais créer/modifier d'index sur la base existante
+
+efdl:
+  validation:
+    # Vérification des retards de validation des paiements (e-mail au validateur) : chaque heure ; « - » = désactivée.
+    delay-check-cron: ${EFDL_VALIDATION_DELAY_CRON:0 0 * * * *}
+  files:
+    # Fichiers (photos, documents joints) sur disque ; la base ne garde que leur description.
+    root: ${EFDL_FILES_ROOT:./data/files}
+    # Photos de profil : sur le serveur, le dossier user.image.folder.
+    user-image-folder: ${EFDL_USER_IMAGE_FOLDER:}
+  security:
+    # Hash BCrypt du mot de passe maître (admin.pass).
+    admin-master-password-hash: ${EFDL_ADMIN_MASTER_PASSWORD_HASH:}
+    # Origines autorisées (CORS) — en développement, le proxy Vite évite CORS.
+    allowed-origins: ${EFDL_ALLOWED_ORIGINS:http://localhost:5173}
+  tenant:
+    # École (application) utilisée quand le Host ne correspond à aucun School.domainName (développement local).
+    default-school-id: ${EFDL_DEFAULT_SCHOOL_ID:}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  health:
+    mail:
+      # Pas de connexion au serveur SMTP (Gmail) à chaque appel de /actuator/health.
+      enabled: false
+
+logging:
+  level:
+    root: INFO
+    com.ffs.efdl: INFO
